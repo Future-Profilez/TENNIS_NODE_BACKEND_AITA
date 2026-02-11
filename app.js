@@ -12,7 +12,7 @@ const logger = require("./utils/logger");
 require("./mongoconfig");
 const axios = require("axios");
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 5001;
 const app = express();
 
 const corsOptions = {
