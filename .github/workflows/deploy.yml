@@ -1,13 +1,26 @@
-name: SSH Deploy
-  uses: appleboy/ssh-action@v1.0.3
-  with:
-    host: ${{ secrets.EC2_HOST }}
-    username: ${{ secrets.EC2_USER }}
-    password: ${{ secrets.EC2_PASSWORD }}
-    script: |
-      cd /home/myapps/TENNIS_NODE_BACKEND_AITA
-      git fetch origin
-      git reset --hard origin/main
-      git clean -fd
-      npm install --production
-      pm2 restart aita-node
+name: Deploy Node App to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: SSH Deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          password: ${{ secrets.EC2_PASSWORD }}
+          script: |
+            set -e
+            cd /home/myapps/TENNIS_NODE_BACKEND_AITA
+            git fetch origin
+            git reset --hard origin/main
+            git clean -fd
+            npm install --production
+            pm2 restart aita-node
