@@ -10,4 +10,4 @@
       git reset --hard origin/main
       git clean -fd
       npm install --production
-      pm2 restart aita_node
+      pm2 restart aita-node

@@ -73,6 +73,8 @@ const RetrieveData = async(url)=>{
   }
 }
 
+
+
 app.post("/rank", async(req, res) => {
   try{
   const { url } = req.body;
@@ -96,7 +98,7 @@ app.post("/rank", async(req, res) => {
 
 app.get("/", (req, res) => {
   res.json({
-    msg: 'hello',
+    msg: 'hello server is running',
     status: 200,
   });
 });
