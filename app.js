@@ -95,16 +95,18 @@ app.post("/rank", async(req, res) => {
   }
 });
 
-const date = new Date();
-const hours = date.getHours();
-const minutes = date.getMinutes();
-const seconds = date.getSeconds();
 
+// last server start time in ist
+const date = new Date();
+const hours = date.getHours() + 5; // IST is UTC+5:30
+const minutes = date.getMinutes() + 30;
+const seconds = date.getSeconds();
+ 
 app.get("/", (req, res) => {
   res.json({
     msg: 'hello server is running',
     status: 200,
-    time: `${hours}:${minutes}:${seconds}`
+    time: `${hours}:${minutes}:${seconds} IST`
 
   });
 });
