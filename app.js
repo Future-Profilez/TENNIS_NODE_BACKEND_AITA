@@ -106,8 +106,7 @@ app.get("/", (req, res) => {
   res.json({
     msg: 'hello server is running',
     status: 200,
-    time: `${hours}:${minutes}:${seconds} IST`
-
+    last_updated_time: `${hours}:${minutes}:${seconds} IST`
   });
 });
 
