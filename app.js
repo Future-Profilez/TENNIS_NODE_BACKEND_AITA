@@ -61,7 +61,6 @@ const RetrieveData = async(url)=>{
       'MatchType' : queryParams?.match_type,
       'Age' : queryParams?.age,
   });
-  // console.log(data?.data);
   return data?.data?.data;
   const response = await axios.post(url, {itfData: data?.data?.data});
   // console.log("response",response?.data);
