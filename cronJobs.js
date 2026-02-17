@@ -3,6 +3,11 @@ const cron = require("node-cron");
 const logger = require("./utils/logger");
 const nodemailer = require("nodemailer");
 
+// We are currently running 3 cron jobs-
+// 1) To sync aita calendar data every day at midnight
+// 2) To sync acceptance list of upcoming matches every 1 hour
+// 3) To sync AITA ranks data by checking if new PDF is available (4 times a day at 12 AM, 6 AM, 12 PM, 6 PM)
+
 const transporter = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
   port: parseInt(process.env.MAIL_PORT),
@@ -43,6 +48,20 @@ function getQueryParams(url) {
   return params;
 }
 
+// Job 1 - Sync calendar data every day at midnight
+cron.schedule("0 0 0 * * *", async () => {
+  try {
+    const resp = await axios.get("https://control.tenniskhelo.com/api/save-aita-calender-data");
+    logger.info(`Successfully hit calendar sync data URL`);
+  } catch (error) {
+    logger.error("❌ Error in acceptance list cron job", {
+      message: error.message,
+      stack: error.stack,
+    });
+  }
+});
+
+// Job 2 - Sync acceptance list of upcoming matches every 1 hour
 cron.schedule("0 0 */1 * * *", async () => {
   try {
     const resp = await axios.get("https://control.tenniskhelo.com/api/aita-calender-upcoming-matches");
@@ -80,6 +99,7 @@ const isValidUrl = async (url) => {
   }
 };
 
+// Job 3 - Sync AITA ranks data by checking if new PDF is available (4 times a day at 12 AM, 6 AM, 12 PM, 6 PM)
 cron.schedule("0 0 0,6,12,18 * * *", async () => {
   try {
     // 1️⃣ Fetch last sync date
