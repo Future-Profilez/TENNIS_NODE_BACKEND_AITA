@@ -104,7 +104,7 @@ const seconds = date.getSeconds();
  
 app.get("/", (req, res) => {
   res.json({
-    msg: 'Hello, Server is Running...',
+    msg: 'Hi, Server is Running...',
     status: 200,
     LAST_UPDATED_TIME: `${hours}:${minutes}:${seconds} IST`
   });
