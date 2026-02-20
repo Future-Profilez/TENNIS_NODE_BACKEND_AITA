@@ -4,6 +4,8 @@ const calendarRoutes = require("./routes/calendarRoutes");
 const keyRoutes = require("./routes/keyRoutes");
 const ITFRoutes = require("./routes/ITFRoutes");
 const EmailRoutes = require("./routes/emailRoutes");
+const ExcelRoutes = require("./routes/excelRoutes");
+
 const multer = require("multer"); 
 require('dotenv').config();
 const { errorHandler } = require("./utils/errorHandler");
@@ -25,6 +27,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions)); 
 app.use(express.json({ limit: '50mb' }));
+
+app.use("/api", ExcelRoutes);
 
 upload = multer();
 app.use(upload.none()); 
